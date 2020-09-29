@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    tools:context=".ChatActivity"
+    >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/avatar_male" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/iv_profile"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="last seen"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/buttomLayout"
+        android:layout_below="@id/toolbar"
+        android:padding="5dp"
+        />
+
+    <RelativeLayout
+        android:id="@+id/buttomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="7dp"
+        android:background="@drawable/chat_buttomlayout_bg">
+
+        <EditText
+            android:id="@+id/et_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/btn_submit"
+            android:layout_toRightOf="@id/btn_addpic"
+            android:background="@android:color/transparent"
+            android:hint="Type a message"
+            android:paddingRight="10dp"
+            android:paddingLeft="3dp"
+            android:textColor="@color/white"
+            android:textColorHint="@android:color/darker_gray" />
+
+
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/btn_submit"
+            android:background="@android:color/transparent"
+            android:visibility="gone"
+
+            >
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerInParent="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_send"
+                android:scaleType="fitCenter"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/btn_addpic"
+            android:background="@android:color/transparent"
+            >
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_centerInParent="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_photo"
+                />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

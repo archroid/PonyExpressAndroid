@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/useritem_bg"
+    android:paddingLeft="10dp"
+    android:paddingTop="7dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="7dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_profile"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/avatar_male" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_status"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_alignBottom="@id/iv_profile"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toRightOf="@id/iv_profile"
+        android:src="#05df29"
+        android:visibility="gone"
+        app:civ_border_color="@color/gray"
+        app:civ_border_width="4dp" />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@id/iv_profile"
+        >
+
+        <LinearLayout
+            android:id="@+id/layout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Username"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/iv_verified"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="3dp"
+                android:background="@drawable/ic_verified"
+                android:backgroundTint="@color/green"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_lastMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout1"
+            android:layout_alignLeft="@id/layout1"
+            android:maxLines="1"
+            android:text="@string/Default_bio"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/layout2"
+
+        >
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="12.12 PM"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/iv_seen"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/tv_time"
+            android:src="@drawable/ic_check"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/layout2"
+        android:background="@drawable/new_msg_bg"
+        android:id="@+id/layoutNewMSG"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:textSize="15sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/tv_newMSG"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

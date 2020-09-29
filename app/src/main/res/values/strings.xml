@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Pony Express</string>
+    <string name="welcome">Welcome to Pony Express.</string>
+    <string name="register">Need a new account?</string>
+    <string name="login">Already have an account?</string>
+
+    <string name="Default_bio">Hi there. I\'m using Pony Express!</string>
+
+    <string name="ChangeUsername">You can set a Username for you on Pony Express. Your friends are able to find you with this username. \nIt can contains all charachters but you would better choose something easy to read.</string>
+    <string name="ChangeBio">You can add a few lines about yourself. Anyone who opens your profile will see this text.</string>
+
+</resources>

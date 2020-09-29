@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1033551831167",
+    "firebase_url": "https://ponyexpressandroid.firebaseio.com",
+    "project_id": "ponyexpressandroid",
+    "storage_bucket": "ponyexpressandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033551831167:android:76b98d577e8d1c04735f4a",
+        "android_client_info": {
+          "package_name": "ir.archroid.ponyexpress"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033551831167-kkkklnomp9d5nr58g5hbusjetl5llmfi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ir.archroid.ponyexpress",
+            "certificate_hash": "0c565b36dcc0988c5fb05483294c74a932adde5c"
+          }
+        },
+        {
+          "client_id": "1033551831167-ok52i3vog2nfutb9kgvt06be3kir11us.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSzY9K6UObH8n786hzAG55mEqOa8Ht9AQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033551831167-ok52i3vog2nfutb9kgvt06be3kir11us.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

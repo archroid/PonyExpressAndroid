@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:layoutDirection="rtl">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp">
+
+            <ImageView
+                android:id="@+id/iv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:maxWidth="300dp"
+                android:maxHeight="450dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/profile_bg" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@id/iv_content"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_seen"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:src="@drawable/ic_check" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/iv_seen"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_toLeftOf="@id/iv_seen"
+                    android:text="12:00 PM"
+                    android:textColor="@color/text_bg"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:id="@+id/tv_message"
+        tools:ignore="InvalidId" />
+</RelativeLayout>
+

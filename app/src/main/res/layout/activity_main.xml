@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:id="@+id/coordinator"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/appBarLayout"
+            >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title=" "
+            app:titleTextColor="@color/colorAccent"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:foregroundGravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/header"
+
+                />
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/appBarLayout"
+            android:layout_above="@id/bottom_navigation"
+            android:id="@+id/viewPager"
+            android:background="@color/gray"
+            />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            app:menu="@menu/navigation_view_manu"
+            app:itemIconTint="@drawable/bottom_navigation_color_selector"
+            app:itemTextColor="@drawable/bottom_navigation_color_selector"
+            />
+    </RelativeLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

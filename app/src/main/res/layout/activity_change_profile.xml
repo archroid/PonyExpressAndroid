@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".ChangeProfileActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextColor="@color/white" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/white"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editText"
+            android:layout_margin="20dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white"
+            android:textSize="19sp" />
+        =
+    </RelativeLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

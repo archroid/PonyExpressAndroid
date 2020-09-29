@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context=".SettingsActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="Settings" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_below="@id/toolbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            tools:src="@drawable/avatar_male" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_profile"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="17dp"
+            android:text="Username"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/tv_bio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_username"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="@string/Default_bio"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="25dp"
+            android:background="@drawable/btn_login"
+            android:text="Logout"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
