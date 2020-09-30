@@ -13,4 +13,18 @@
         android:id="@+id/recyclerView"
         />
 
+    <TextView
+        android:id="@+id/tv_noItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You don't have any friends!"
+        android:textSize="17sp"
+        android:layout_centerInParent="true"
+        android:textColor="#fffeff"
+        android:textStyle="bold"
+        android:background="@drawable/message_bg"
+        android:padding="10dp"
+        android:visibility="gone"
+        />
+
 </RelativeLayout>
