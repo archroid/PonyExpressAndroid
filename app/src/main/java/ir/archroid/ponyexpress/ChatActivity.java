@@ -13,12 +13,14 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
@@ -43,6 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 import ir.archroid.ponyexpress.Adapter.MessageAdapter;
@@ -63,6 +67,7 @@ public class ChatActivity extends AppCompatActivity {
     private TextView tv_status;
 
     private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
 
     private FirebaseUser firebaseUser;
     private DatabaseReference userRef;
@@ -109,9 +114,12 @@ public class ChatActivity extends AppCompatActivity {
         // Modify RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        messageAdapter = new MessageAdapter(messages, getApplicationContext());
+        recyclerView.setAdapter(messageAdapter);
 
         iv_profile = findViewById(R.id.iv_profile);
         tv_username = findViewById(R.id.tv_username);
@@ -234,7 +242,7 @@ public class ChatActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {       
+            public void afterTextChanged(Editable editable) {
                 String message = et_message.getText().toString().trim();
                 if (message.isEmpty()) {
                     Map hashMap = new HashMap();
@@ -280,7 +288,6 @@ public class ChatActivity extends AppCompatActivity {
 
                     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
                     rootRef.updateChildren(messageKeysMap);
-                    Toast.makeText(ChatActivity.this, "ADDED", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -301,10 +308,14 @@ public class ChatActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Message message = dataSnapshot.getValue(Message.class);
                     messages.add(message);
-
                 }
-                messageAdapter = new MessageAdapter(messages, getApplicationContext());
-                recyclerView.setAdapter(messageAdapter);
+
+                messageAdapter.notifyDataSetChanged();
+
+                Toast.makeText(ChatActivity.this, " " + linearLayoutManager.findFirstVisibleItemPosition(), Toast.LENGTH_SHORT).show();
+                if (linearLayoutManager.findFirstVisibleItemPosition() + 14 >= recyclerView.getAdapter().getItemCount()){
+                    recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
+                }
             }
 
             @Override
@@ -404,7 +415,12 @@ public class ChatActivity extends AppCompatActivity {
                     messageKeysMap.put("Chat/" + userId + "/" + firebaseUser.getUid(), chatAddMap2);
 
                     DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
-                    RootRef.updateChildren(messageKeysMap);
+                    RootRef.updateChildren(messageKeysMap, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                            recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
+                        }
+                    });
 
                 }
 
@@ -485,46 +501,67 @@ public class ChatActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             String downlaodUrl = task.getResult().toString();
 
-                            String thisUserRef = "Messages/" + firebaseUser.getUid() + "/" + userId;
-                            String targetUserRef = "Messages/" + userId + "/" + firebaseUser.getUid();
+                            final String thisUserRef = "Messages/" + firebaseUser.getUid() + "/" + userId;
+                            final String targetUserRef = "Messages/" + userId + "/" + firebaseUser.getUid();
 
                             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Messages").child(firebaseUser.getUid())
                                     .child(userId).push();
-                            String push_id = databaseReference.getKey();
+                            final String push_id = databaseReference.getKey();
 
-                            Map messageDataMap = new HashMap();
+                            final Map messageDataMap = new HashMap();
                             messageDataMap.put("message", downlaodUrl);
                             messageDataMap.put("seen", "false");
                             messageDataMap.put("type", "pic");
                             messageDataMap.put("sender", firebaseUser.getUid());
                             messageDataMap.put("time", ServerValue.TIMESTAMP);
 
-                            Map chatAddMap = new HashMap();
+
+                            final HashMap<String, Object> chatAddMap = new HashMap();
                             chatAddMap.put("lastSender", firebaseUser.getUid());
                             chatAddMap.put("lastMessage", "Uploaded Photo");
                             chatAddMap.put("lastSeen", "false");
                             chatAddMap.put("lastTime", ServerValue.TIMESTAMP);
-                            chatAddMap.put("notSeenMSG", newMessages.getFirebaseUserNewMSG());
 
-                            Map chatAddMap2 = new HashMap();
-                            chatAddMap2.put("lastSender", firebaseUser.getUid());
-                            chatAddMap2.put("lastMessage", "Uploaded Photo");
-                            chatAddMap2.put("lastSeen", "false");
-                            chatAddMap2.put("lastTime", ServerValue.TIMESTAMP);
-                            chatAddMap2.put("notSeenMSG", newMessages.getTargetUserNewMSG() + 1);
+                            DatabaseReference targetUserNewMSGRef = FirebaseDatabase.getInstance().getReference("Chat").child(userId)
+                                    .child(firebaseUser.getUid());
+                            targetUserNewMSGRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int targetUserNewMSG;
+                                    try {
+                                        targetUserNewMSG = Integer.parseInt(snapshot.child("notSeenMSG").getValue().toString());
+                                    } catch (Exception e) {
+                                        targetUserNewMSG = 0;
+                                    }
 
-                            Map messageKeysMap = new HashMap();
-                            messageKeysMap.put(thisUserRef + "/" + push_id, messageDataMap);
-                            messageKeysMap.put(targetUserRef + "/" + push_id, messageDataMap);
-                            messageKeysMap.put("Chat/" + firebaseUser.getUid() + "/" + userId, chatAddMap);
-                            messageKeysMap.put("Chat/" + userId + "/" + firebaseUser.getUid(), chatAddMap2);
+                                    HashMap<String, Object> chatAddMap2 = new HashMap();
+                                    chatAddMap2.put("lastSender", firebaseUser.getUid());
+                                    chatAddMap2.put("lastMessage", "Uploaded Photo");
+                                    chatAddMap2.put("lastSeen", "false");
+                                    chatAddMap2.put("lastTime", ServerValue.TIMESTAMP);
+                                    chatAddMap2.put("notSeenMSG", targetUserNewMSG + 1);
 
-                            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-                            rootRef.updateChildren(messageKeysMap);
+                                    HashMap<String, Object> messageKeysMap = new HashMap();
+                                    messageKeysMap.put(thisUserRef + "/" + push_id, messageDataMap);
+                                    messageKeysMap.put(targetUserRef + "/" + push_id, messageDataMap);
+                                    messageKeysMap.put("Chat/" + firebaseUser.getUid() + "/" + userId, chatAddMap);
+                                    messageKeysMap.put("Chat/" + userId + "/" + firebaseUser.getUid(), chatAddMap2);
 
+                                    DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
+                                    RootRef.updateChildren(messageKeysMap);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
 
                             Toast.makeText(ChatActivity.this, "Successfully updated!", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
+
+                            recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
+
                         } else {
                             Toast.makeText(ChatActivity.this, "Upload Failed!", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
@@ -535,6 +572,8 @@ public class ChatActivity extends AppCompatActivity {
                 Exception error = result.getError();
                 Toast.makeText(ChatActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
+
+
             }
         }
 
