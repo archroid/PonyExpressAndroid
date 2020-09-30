@@ -101,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean checkValid(String Username, String Password, String Email, String Confirm) {
 
 //        Check username
-        if (Username.isEmpty() || Username.length() < 4) {
+        if (Username.isEmpty()) {
             et_username.setError("Invalid Username");
             makeSnackbar.Alert(getApplicationContext(), coordinator, "Invalid Username!");
             return false;
