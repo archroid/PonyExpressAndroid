@@ -92,12 +92,12 @@ public class RequestsFragment extends Fragment {
                         for (User user : allUsers) {
                             if (user.getId().equals(userid)) {
                                 requestedUsers.add(user);
+                                tv_noItem.setVisibility(View.GONE);
                             }
                         }
                     }
 
                 }
-                tv_noItem.setVisibility(View.INVISIBLE);
                 RequestAdapter requestAdapter = new RequestAdapter(requestedUsers, getContext());
                 recyclerView.setAdapter(requestAdapter);
             }
