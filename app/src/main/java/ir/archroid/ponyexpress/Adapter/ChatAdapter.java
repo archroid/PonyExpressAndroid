@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
@@ -114,24 +113,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             }
         }
 
-        if (newMessage.equals("null")){
-            Toast.makeText(context, "it is NULL", Toast.LENGTH_SHORT).show();
-        }
-        if (newMessage.equals(null)){
-            Toast.makeText(context, "it is null", Toast.LENGTH_SHORT).show();
-        }
-        if (newMessage.isEmpty()){
-            Toast.makeText(context, "it is empty", Toast.LENGTH_SHORT).show();
 
-        }
-        if (newMessage == null){
-            Toast.makeText(context, "it is null", Toast.LENGTH_SHORT).show();
 
+        holder.tv_newMSG.setVisibility(View.GONE);
+        if (!newMessage.equals("null")){
+            if (!newMessage.equals("0")){
+                holder.tv_newMSG.setText(newMessage);
+                holder.tv_newMSG.setVisibility(View.VISIBLE);
+            }
         }
-        if (!newMessage.equals("0")) {
-            holder.tv_newMSG.setText(newMessage);
-            holder.tv_newMSG.setVisibility(View.VISIBLE);
-        }
+
     }
 
     @Override
