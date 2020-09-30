@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -25,6 +27,7 @@ import ir.archroid.ponyexpress.R;
 public class FriendsFragment extends Fragment {
 
     private RecyclerView recyclerView;
+    private TextView tv_noItem;
 
     private FirebaseUser firebaseUser;
     private DatabaseReference usersRef;
@@ -41,6 +44,9 @@ public class FriendsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
+
+
+        tv_noItem = view.findViewById(R.id.tv_noItem);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -79,6 +85,7 @@ public class FriendsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 friendUsers.clear();
                 dates.clear();
+                tv_noItem.setVisibility(View.VISIBLE);
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String userid = dataSnapshot.getKey();
                     String date = dataSnapshot.getValue().toString();
@@ -87,6 +94,7 @@ public class FriendsFragment extends Fragment {
                         if (userid.equals(user.getId())) {
                             friendUsers.add(user);
                             dates.add(date);
+                            tv_noItem.setVisibility(View.GONE);
                         }
                     }
 
