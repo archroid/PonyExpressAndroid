@@ -48,7 +48,7 @@ public class RequestsFragment extends Fragment {
 
         tv_noItem = view.findViewById(R.id.tv_noItem);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.recyclerView_friends);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

@@ -53,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 switch (position) {
+//                    case 0:
+//                        bottomNavigationView.setSelectedItemId(R.id.requests);
+//                        break;
                     case 0:
-                        bottomNavigationView.setSelectedItemId(R.id.requests);
-                        break;
-                    case 1:
                         bottomNavigationView.setSelectedItemId(R.id.chats);
                         break;
-                    case 2:
+                    case 1:
                         bottomNavigationView.setSelectedItemId(R.id.friends);
                         break;
 
@@ -80,14 +80,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.requests:
+//                    case R.id.requests:
+//                        viewPager.setCurrentItem(0);
+//                        break;
+                    case R.id.chats:
                         viewPager.setCurrentItem(0);
                         break;
-                    case R.id.chats:
-                        viewPager.setCurrentItem(1);
-                        break;
                     case R.id.friends:
-                        viewPager.setCurrentItem(2);
+                        viewPager.setCurrentItem(1);
                         break;
                 }
                 return true;

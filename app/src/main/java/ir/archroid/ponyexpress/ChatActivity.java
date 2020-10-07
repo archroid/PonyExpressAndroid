@@ -112,7 +112,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         // Modify RecyclerView
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView_friends);
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);

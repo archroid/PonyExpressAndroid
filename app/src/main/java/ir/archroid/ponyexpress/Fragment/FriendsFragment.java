@@ -21,21 +21,31 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import ir.archroid.ponyexpress.Adapter.FriendAdapter;
+import ir.archroid.ponyexpress.Adapter.RequestAdapter;
 import ir.archroid.ponyexpress.Model.User;
 import ir.archroid.ponyexpress.R;
 
 public class FriendsFragment extends Fragment {
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView_requests;
+    private RecyclerView recyclerView_friends;
+
+    private TextView tv_requests;
+    private TextView tv_friends;
+
     private TextView tv_noItem;
 
     private FirebaseUser firebaseUser;
     private DatabaseReference usersRef;
     private DatabaseReference friendsRef;
+    private DatabaseReference friendsReqRef;
 
     private List<User> allUsers;
     private List<User> friendUsers;
+    private List<User> requestedUsers;
     private List<String> dates;
+
+
 
     public FriendsFragment() {
     }
@@ -48,19 +58,34 @@ public class FriendsFragment extends Fragment {
 
         tv_noItem = view.findViewById(R.id.tv_noItem);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        tv_friends = view.findViewById(R.id.tv_friends);
+        tv_requests = view.findViewById(R.id.tv_requests);
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+
+        recyclerView_friends = view.findViewById(R.id.recyclerView_friends);
+        recyclerView_friends.setHasFixedSize(true);
+        recyclerView_friends.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView_friends.getContext(),
                 new LinearLayoutManager(getContext()).getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView_friends.addItemDecoration(dividerItemDecoration);
+
+        recyclerView_requests = view.findViewById(R.id.recyclerView_requests);
+        recyclerView_requests.setHasFixedSize(true);
+        recyclerView_requests.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        DividerItemDecoration dividerItemDecoration2 = new DividerItemDecoration(recyclerView_requests.getContext(),
+                new LinearLayoutManager(getContext()).getOrientation());
+        recyclerView_friends.addItemDecoration(dividerItemDecoration2);
 
         allUsers = new ArrayList<>();
+        requestedUsers = new ArrayList<>();
         friendUsers = new ArrayList<>();
         dates = new ArrayList<>();
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        friendsReqRef = FirebaseDatabase.getInstance().getReference("FriendRequests");
+
 
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
         usersRef.addValueEventListener(new ValueEventListener() {
@@ -100,13 +125,45 @@ public class FriendsFragment extends Fragment {
 
                 }
                 FriendAdapter friendAdapter = new FriendAdapter(friendUsers, getContext(), dates);
-                recyclerView.setAdapter(friendAdapter);
+                tv_friends.setText("FREINDS - " + dates.size());
+                recyclerView_friends.setAdapter(friendAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
+        friendsReqRef.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                requestedUsers.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    final String userid = dataSnapshot.getKey();
+                    String req_type = dataSnapshot.child("request_type").getValue().toString();
+                    if (req_type.equals("received")) {
+                        for (User user : allUsers) {
+                            if (user.getId().equals(userid)) {
+                                requestedUsers.add(user);
+                                tv_noItem.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                }
+                RequestAdapter requestAdapter = new RequestAdapter(requestedUsers, getContext());
+                tv_requests.setText("PENDING REQUESTS - " + requestAdapter.getItemCount());
+                recyclerView_requests.setAdapter(requestAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
 
         return view;
     }
